@@ -1,0 +1,43 @@
+﻿<Window x:Class="TodoApp.TodoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TodoApp"
+        mc:Ignorable="d"
+        Title="Todo" Height="174" Width="350" FontSize="16" Background="#FFDCEDFF">
+    <Window.DataContext>
+        <local:Todo/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        
+        <!--Просто биндим все поля туду к разным полям всяким-->
+        <Label Grid.Column="0" Grid.Row="0">Дата</Label>
+        <DatePicker Grid.Column="1" Grid.Row="0" SelectedDate="{Binding DateTime}"></DatePicker>
+        
+        <Label Grid.Column="0" Grid.Row="1">Время</Label>
+        <StackPanel Margin="4"  Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+            <TextBox Width="60" Text="{Binding Hour}"></TextBox>
+            <Label> : </Label>
+            <TextBox Width="60" Text="{Binding Minute}"></TextBox>
+            <Label>:</Label>
+            <TextBox Width="60" Text="{Binding Second}"></TextBox>
+        </StackPanel>
+
+        <Label Grid.Column="0" Grid.Row="2">Текст</Label>
+        <TextBox Margin="4"  Grid.Column="1" Grid.Row="2" Text="{Binding Text}"></TextBox>
+
+        <Button MaxWidth="150" Grid.Column="1" Margin="4" Grid.Row="3" Click="Ok_Click">Сохранить</Button>
+    </Grid>
+</Window>

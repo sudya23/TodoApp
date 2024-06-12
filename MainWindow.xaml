@@ -1,0 +1,64 @@
+﻿<Window x:Class="TodoApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TodoApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="700"  FontSize="16" Background="#FFDCEDFF">
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--Панель фильтра-->
+        <StackPanel Margin="3" Orientation="Horizontal">
+            <ComboBox Name="filterBox" >
+            </ComboBox>
+            <Label >Поиск:</Label>
+            <TextBox Name="searchField" MinWidth="200" ></TextBox>
+        </StackPanel>
+        
+        <!--Штука для просмотра данные
+        Данные просто привязываются, а кнопки через CellTemplate-->
+        <ListView Name="listBox" Grid.Row="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="50" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="3" Click="MarkCompleted" Visibility="{Binding IsCompleted, Converter={StaticResource BoolToVisibilityConverter}}">✅</Button>
+                                    <!--<Button Margin="3" Click="MarkCompleted" Content="{Binding CompletedText}"></Button>-->
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="auto" Header="Todo" DisplayMemberBinding="{Binding Text}"></GridViewColumn>
+                    <GridViewColumn Width="auto" Header="Времени осталось" DisplayMemberBinding="{Binding TimeLeft, StringFormat=hh\\:mm\\:ss}"></GridViewColumn>
+                    <GridViewColumn Width="auto" Header="До" DisplayMemberBinding="{Binding DateTime, StringFormat=hh:mm:ss dd.MM}"></GridViewColumn>
+                    <GridViewColumn Width="auto" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Margin="3" Click="EditButtonClick">✏️</Button>
+                                    <Button Margin="3" Click="DeleteButtonClick">🗑</Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!--Панель с кнопкой добавить-->
+        <StackPanel Margin="4" HorizontalAlignment="Right"  Orientation="Horizontal" Grid.Row="2">
+            <Button Padding="2" Click="AddButtonClick">Добавить</Button>
+        </StackPanel>
+    </Grid>
+</Window>
